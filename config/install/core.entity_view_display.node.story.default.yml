@@ -261,7 +261,7 @@ third_party_settings:
       -
         layout_id: 'bootstrap_layout_builder:blb_col_1'
         layout_settings:
-          label: ''
+          label: 'Tags and Organizations'
           context_mapping: {  }
           container_wrapper_classes: ''
           container_wrapper_attributes: null
