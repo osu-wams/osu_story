@@ -1,0 +1,20 @@
+<?php
+
+use Drupal\Core\Config\FileStorage;
+
+/**
+ * Add metatag for story.
+ */
+function osu_story_update_9001(&$sandbox) {
+  $install_path = Drupal::service('module_handler')
+    ->getModule('osu_story')
+    ->getPath();
+  $config_path = realpath($install_path . '/config/install');
+  $source = new FileStorage($config_path);
+  /** @var \Drupal\Core\Config\CachedStorage $config_storage */
+  $config_storage = \Drupal::service('config.storage');
+  $config_storage->write('metatag.metatag_defaults.node__story', $source->read('metatag.metatag_defaults.node__story'));
+
+  $config_storage->write('core.entity_view_display.node.story.teaser', $source->read('core.entity_view_display.node.story.teaser'));
+  return t('Add/updated the metatag defaults for OSU Story.');
+}
