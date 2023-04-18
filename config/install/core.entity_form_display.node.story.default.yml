@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - field.field.node.story.body
+    - field.field.node.story.field_meta_tags
     - field.field.node.story.field_osu_organizations
     - field.field.node.story.field_osu_story_cover_image
     - field.field.node.story.field_osu_story_external_url
@@ -12,6 +13,7 @@ dependencies:
   module:
     - link
     - media_library
+    - metatag
     - path
     - text
 id: node.story.default
@@ -34,6 +36,14 @@ content:
     weight: 2
     region: content
     settings: {  }
+    third_party_settings: {  }
+  field_meta_tags:
+    type: metatag_firehose
+    weight: 27
+    region: content
+    settings:
+      sidebar: true
+      use_details: true
     third_party_settings: {  }
   field_osu_organizations:
     type: entity_reference_autocomplete
