@@ -1,3 +1,4 @@
+uuid: 452dbc79-21ed-459e-b8ad-f26da2c96392
 langcode: en
 status: true
 dependencies:
@@ -169,7 +170,7 @@ third_party_settings:
                 type: entity_reference_entity_view
                 label: hidden
                 settings:
-                  view_mode: hero_background
+                  view_mode: hero_background_w_caption
                 third_party_settings: { }
             weight: -10
             additional:
@@ -212,7 +213,7 @@ third_party_settings:
                   margin_right:
                     class: _none
                   margin_bottom:
-                    class: _none
+                    class: mb-4
                   border:
                     border_style:
                       class: null
@@ -254,9 +255,11 @@ third_party_settings:
                       class: _none
                     rounded_corner_bottom_right:
                       class: _none
-                  scroll_effects:
+                  box_shadow:
                     class: null
                   items_alignment:
+                    class: null
+                  scroll_effects:
                     class: null
                   min_height:
                     class: 0
