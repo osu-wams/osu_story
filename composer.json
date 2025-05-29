@@ -10,6 +10,20 @@
       "email": "matthew.brabham@oregonstate.edu"
     }
   ],
-  "require": {
+  "require-dev": {
+    "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
+    "squizlabs/php_codesniffer": "^3.13",
+    "drupal/coder": "^8.3"
+  },
+  "scripts": {
+    "phpcs": "phpcs",
+    "phpcbf": "phpcbf",
+    "cs-checkstyle": "phpcs -q --report=checkstyle",
+    "twigcs": "twigcs"
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
   }
 }
