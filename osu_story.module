@@ -1,0 +1,75 @@
+<?php
+
+/**
+ * @file
+ * OSU Story Module.
+ */
+
+use Drupal\Component\Serialization\Json;
+use Drupal\node\NodeInterface;
+use Drupal\redirect\Entity\Redirect;
+
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ *
+ * For Story Nodes check if the External URL field is populated.
+ * If so, update the meta-tags, exclude the story from the XML Sitemap,
+ * and create a redirect to the external URL.
+ */
+function osu_story_node_presave(NodeInterface $node) {
+  if ($node->bundle() == 'story') {
+    if (!$node->get('field_osu_story_external_url')->isEmpty()) {
+      $url_item = $node->get('field_osu_story_external_url')->first();
+      $external_url = $url_item ? $url_item->getUrl()->toString() : '';
+      // Meta tag updates.
+      if ($node->hasField('field_meta_tags')) {
+        $meta_tag_field = $node->get('field_meta_tags')->getValue();
+        if (!empty($meta_tag_field)) {
+          // Decode the JSON string.
+          $meta_tags = Json::decode($meta_tag_field[0]['value']);
+          // Update meta-tags for external story.
+          $meta_tags['canonical_url'] = $external_url;
+          $meta_tags['robots'] = 'noindex, nofollow';
+          $meta_tags['og_url'] = $external_url;
+          // Encode the JSON string.
+          $meta_tag_field[0]['value'] = Json::encode($meta_tags);
+          // Set the field value.
+          $node->set('field_meta_tags', json_encode($meta_tags));
+        }
+      }
+      // XML Sitemap, exclude this page.
+      $xmlsitemap_settings = $node->xmlsitemap;
+      $xmlsitemap_settings['status'] = FALSE;
+      $xmlsitemap_settings['status_override'] = 1;
+      $node->xmlsitemap = $xmlsitemap_settings;
+      // Create a redirect if one does not already exist for this nid and
+      // external url.
+      /** @var Drupal\redirect\RedirectRepository $redirect_repository */
+      $redirect_repository = \Drupal::service('redirect.repository');
+      $source_path = $node->toUrl()->getInternalPath();
+      $source_redirects = $redirect_repository->findBySourcePath($source_path);
+      $redirect_found = FALSE;
+      // Find the redirect if it already exists.
+      foreach ($source_redirects as $source_redirect) {
+        if ($source_redirect->getRedirectUrl()
+          ->toUriString() == $external_url) {
+          $redirect_found = TRUE;
+          break;
+        }
+      }
+      // We should only have one Redirect created for a given nid and
+      // external url.
+      if (!$redirect_found) {
+        $redirect_config = \Drupal::config('redirect.settings');
+        $redirect = Redirect::create();
+        $redirect->setSource($node->toUrl()->getInternalPath());
+        $redirect->setStatusCode($redirect_config->get('default_status_code'));
+        $redirect->setRedirect($external_url);
+        $redirect->save();
+      }
+      // Set a status message.
+      \Drupal::messenger()
+        ->addStatus(t('<p>This story has been marked as external.<br />Meta-tags have been updated, the story is excluded from the XML Sitemap, and a redirect to the external URL has been created to protect SEO.</p>'));
+    }
+  }
+}

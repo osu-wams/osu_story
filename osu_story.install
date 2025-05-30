@@ -1,9 +1,14 @@
 <?php
 
+/**
+ * @file
+ * The OSU Story module's installation and upgrade functions.
+ */
+
 use Drupal\Core\Config\FileStorage;
 
 /**
- * Add metatag for story.
+ * Add meta-tag for a story.
  */
 function osu_story_update_9001(&$sandbox) {
   $install_path = Drupal::service('module_handler')
@@ -20,7 +25,7 @@ function osu_story_update_9001(&$sandbox) {
 }
 
 /**
- * Update the description of field_osu_story_external_url
+ * Update the description of the field_osu_story_external_url.
  */
 function osu_story_update_9002(&$sandbox) {
   /** @var \Drupal\Core\Config\CachedStorage $config_storage */
