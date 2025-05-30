@@ -48,18 +48,18 @@ function osu_story_node_presave(NodeInterface $node) {
       $redirect_repository = \Drupal::service('redirect.repository');
       $source_path = $node->toUrl()->getInternalPath();
       $source_redirects = $redirect_repository->findBySourcePath($source_path);
-      $redirect_fround = FALSE;
+      $redirect_found = FALSE;
       // Find the redirect if it already exists.
       foreach ($source_redirects as $source_redirect) {
         if ($source_redirect->getRedirectUrl()
           ->toUriString() == $external_url) {
-          $redirect_fround = TRUE;
+          $redirect_found = TRUE;
           break;
         }
       }
       // We should only have one Redirect created for a given nid and
       // external url.
-      if (!$redirect_fround) {
+      if (!$redirect_found) {
         $redirect_config = \Drupal::config('redirect.settings');
         $redirect = Redirect::create();
         $redirect->setSource($node->toUrl()->getInternalPath());
