@@ -8,7 +8,7 @@ dependencies:
     - field.field.node.story.field_osu_story_caption
     - field.field.node.story.field_osu_story_cover_image
     - field.field.node.story.field_osu_story_external_url
-    - field.field.node.story.field_realtime_seo
+    - field.field.node.story.field_osu_story_realtime_seo
     - field.field.node.story.field_tags
     - node.type.story
     - views.view.osu_stories
@@ -375,7 +375,7 @@ third_party_settings:
             uuid: d5e6b87c-5272-4e4d-8712-b69ed019967c
             region: blb_region_col_1
             configuration:
-              id: 'field_block:node:story:field_realtime_seo'
+              id: 'field_block:node:story:field_osu_story_realtime_seo'
               label_display: '0'
               context_mapping:
                 entity: layout_builder.entity
@@ -987,7 +987,7 @@ content:
     third_party_settings: {  }
     weight: 104
     region: blb_region_col_1
-  field_realtime_seo:
+  field_osu_story_realtime_seo:
     type: yoastseo_empty_formatter
     label: above
     settings: {  }
