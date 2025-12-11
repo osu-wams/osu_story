@@ -61,5 +61,5 @@ function osu_story_update_9003(&$sandbox) {
   $config_storage->write('views.view.osu_stories', $source->read('views.view.osu_stories'));
   $config_storage->write('field.field.node.story.field_osu_story_realtime_seo', $source->read('field.field.node.story.field_osu_story_realtime_seo'));
 
-  return t('Added realtime_seo field and removed layout override capability OSU Story.');
+  return t('Added realtime_seo field and removed layout override capability for OSU Story.');
 }
