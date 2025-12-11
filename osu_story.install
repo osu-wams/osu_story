@@ -40,3 +40,26 @@ function osu_story_update_9002(&$sandbox) {
 
   return t('Updated the description of field_osu_story_external_url for OSU Story.');
 }
+
+/**
+ * Add realtime_seo (yoast!) for a story.
+ * Remove layout override ability for story.
+ */
+function osu_story_update_9003(&$sandbox) {
+  $install_path = Drupal::service('module_handler')
+    ->getModule('osu_story')
+    ->getPath();
+  $config_path = realpath($install_path . '/config/install');
+  $source = new FileStorage($config_path);
+  /** @var \Drupal\Core\Config\CachedStorage $config_storage */
+  $config_storage = \Drupal::service('config.storage');
+  $config_storage->write('core.entity_form_display.node.story.default', $source->read('core.entity_form_display.node.story.default'));
+  $config_storage->write('core.entity_view_display.node.story.default', $source->read('core.entity_view_display.node.story.default'));
+  $config_storage->write('core.entity_view_display.node.story.teaser', $source->read('core.entity_view_display.node.story.teaser'));
+  $config_storage->write('field.field.node.story.body', $source->read('field.field.node.story.body'));
+  $config_storage->write('node.type.story', $source->read('node.type.story'));
+  $config_storage->write('views.view.osu_stories', $source->read('views.view.osu_stories'));
+  $config_storage->write('field.field.node.story.field_osu_story_realtime_seo', $source->read('field.field.node.story.field_osu_story_realtime_seo'));
+
+  return t('Add/updated the metatag defaults for OSU Story.');
+}
