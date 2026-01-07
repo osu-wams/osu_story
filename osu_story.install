@@ -6,11 +6,13 @@
  */
 
 use Drupal\Core\Config\FileStorage;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\image\Entity\ImageStyle;
 
 /**
  * Add meta-tag for a story.
  */
-function osu_story_update_9001(&$sandbox) {
+function osu_story_update_9001(&$sandbox): TranslatableMarkup {
   $install_path = Drupal::service('module_handler')
     ->getModule('osu_story')
     ->getPath();
@@ -27,7 +29,7 @@ function osu_story_update_9001(&$sandbox) {
 /**
  * Update the description of the field_osu_story_external_url.
  */
-function osu_story_update_9002(&$sandbox) {
+function osu_story_update_9002(&$sandbox): TranslatableMarkup {
   /** @var \Drupal\Core\Config\CachedStorage $config_storage */
   $config_storage = \Drupal::service('config.storage');
 
@@ -39,4 +41,31 @@ function osu_story_update_9002(&$sandbox) {
   $config_storage->write('field.field.node.story.field_osu_story_external_url', $field_config);
 
   return t('Updated the description of field_osu_story_external_url for OSU Story.');
+}
+
+/**
+ * Create a new Image style and Update Views Archive page.
+ */
+function osu_story_update_9003(&$sandbox): TranslatableMarkup {
+  /** @var string $osu_media_module_path */
+  $osu_media_module_path = Drupal::service('module_handler')
+    ->getModule('osu_story')
+    ->getPath();
+  $osu_media_config_path = $osu_media_module_path . '/config/install';
+  $osu_media_config = new FileStorage($osu_media_config_path);
+  $existing_image_styles = ImageStyle::load('osu_story_archive');
+  if (!$existing_image_styles) {
+    ImageStyle::create($osu_media_config->read('image.style.osu_stories_archive'))
+      ->save();
+  }
+  /** @var Drupal\Core\Config\ConfigFactory $config_factory */
+  $config_factory = Drupal::service('config.factory');
+  /** @var Drupal\Core\Config\Config $osu_story_view_config */
+  $osu_story_view_config = $config_factory->getEditable('views.view.osu_stories');
+  $osu_story_view_archive_image_style = $osu_story_view_config->get('display.stories_archive.display_options.fields.field_osu_story_cover_image.settings.image_style');
+  if ($osu_story_view_archive_image_style === '1400x900') {
+    $osu_story_view_config->set('display.stories_archive.display_options.fields.field_osu_story_cover_image.settings.image_style', 'osu_stories_archive');
+  }
+  $osu_story_view_config->save();
+  return t('Created new Image style and updated the Views Archive page for OSU Story.');
 }
