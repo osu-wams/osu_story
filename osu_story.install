@@ -46,7 +46,7 @@ function osu_story_update_9002(&$sandbox): TranslatableMarkup {
 /**
  * Create a new Image style and Update Views Archive page.
  */
-function osu_story_update_9003(&$sandbox): TranslatableMarkup {
+function osu_story_update_9004(&$sandbox): TranslatableMarkup {
   /** @var string $osu_media_module_path */
   $osu_media_module_path = Drupal::service('module_handler')
     ->getModule('osu_story')
