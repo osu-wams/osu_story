@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Config\FileStorage;
+use Drupal\layout_builder\Plugin\SectionStorage\OverridesSectionStorage;
 
 /**
  * Add meta-tag for a story.
@@ -39,4 +40,49 @@ function osu_story_update_9002(&$sandbox) {
   $config_storage->write('field.field.node.story.field_osu_story_external_url', $field_config);
 
   return t('Updated the description of field_osu_story_external_url for OSU Story.');
+}
+
+/**
+ * Add realtime_seo (yoast!) for a story.
+ * Remove layout override ability for story.
+ */
+function osu_story_update_9003(&$sandbox) {
+  $install_path = Drupal::service('module_handler')
+    ->getModule('osu_story')
+    ->getPath();
+  $config_path = realpath($install_path . '/config/install');
+  $optional_config_path = realpath($install_path . '/config/optional');
+  $source = new FileStorage($config_path);
+  $optional_source = new FileStorage($optional_config_path);
+  /** @var \Drupal\Core\Config\CachedStorage $config_storage */
+  $config_storage = \Drupal::service('config.storage');
+  $config_storage->write('core.entity_form_display.node.story.default', $source->read('core.entity_form_display.node.story.default'));
+  $config_storage->write('core.entity_view_display.node.story.teaser', $source->read('core.entity_view_display.node.story.teaser'));
+  $config_storage->write('field.field.node.story.body', $source->read('field.field.node.story.body'));
+  $config_storage->write('node.type.story', $source->read('node.type.story'));
+  $config_storage->write('field.field.node.story.field_osu_story_realtime_seo', $source->read('field.field.node.story.field_osu_story_realtime_seo'));
+  // Check to see if _any_ stories have layout overrides.
+  $num_stories_with_overrides = \Drupal::entityTypeManager()
+    ->getStorage('node')
+    ->getQuery()
+    ->accessCheck(FALSE)
+    ->exists(OverridesSectionStorage::FIELD_NAME)
+    ->condition('type', 'story')
+    ->count()
+    ->execute();
+  // Only write the default display if there are no overrides.
+  if ($num_stories_with_overrides === 0) {
+    $config_storage->write('core.entity_view_display.node.story.default', $source->read('core.entity_view_display.node.story.default'));
+  }
+  // Check to see if the view was changed from the original view and overwrite
+  // with changes.
+  $osu_stories_db_view = $config_storage->read('views.view.osu_stories');
+  $osu_stories_update_view = $source->read('views.view.osu_stories');
+  if ($osu_stories_db_view === $osu_stories_update_view) {
+    $config_storage->write('views.view.osu_stories', $source->read('views.view.osu_stories'));
+  }
+  if (Drupal::moduleHandler()->moduleExists('group')) {
+    $config_storage->write('views.view.osu_stories__groups', $optional_source->read('views.view.osu_stories__groups'));
+  }
+  return t('Added realtime_seo field and removed layout override capability for OSU Story.');
 }

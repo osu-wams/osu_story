@@ -1,4 +1,3 @@
-uuid: 452dbc79-21ed-459e-b8ad-f26da2c96392
 langcode: en
 status: true
 dependencies:
@@ -9,8 +8,8 @@ dependencies:
     - field.field.node.story.field_osu_story_caption
     - field.field.node.story.field_osu_story_cover_image
     - field.field.node.story.field_osu_story_external_url
+    - field.field.node.story.field_osu_story_realtime_seo
     - field.field.node.story.field_tags
-    - field.field.node.story.layout_builder__layout
     - node.type.story
     - views.view.osu_stories
   module:
@@ -22,12 +21,14 @@ dependencies:
     - text
     - user
     - views
+    - yoast_seo
 third_party_settings:
   layout_builder:
     enabled: true
-    allow_custom: true
+    allow_custom: false
     sections:
-      - layout_id: 'bootstrap_layout_builder:blb_col_1'
+      -
+        layout_id: 'bootstrap_layout_builder:blb_col_1'
         layout_settings:
           label: 'Default Story Body'
           container_wrapper_classes: ''
@@ -138,7 +139,7 @@ third_party_settings:
               - col-md-12
               - col-12
           remove_gutters: '0'
-          context_mapping: { }
+          context_mapping: {  }
         components:
           d365019e-4765-4f49-b8a8-9a73d382353c:
             uuid: d365019e-4765-4f49-b8a8-9a73d382353c
@@ -151,10 +152,10 @@ third_party_settings:
               formatter:
                 type: text_default
                 label: hidden
-                settings: { }
-                third_party_settings: { }
+                settings: {  }
+                third_party_settings: {  }
             weight: -9
-            additional: { }
+            additional: {  }
           afa29d0e-d373-4af6-82fc-9fb51c0562b4:
             uuid: afa29d0e-d373-4af6-82fc-9fb51c0562b4
             region: blb_region_col_1
@@ -171,7 +172,7 @@ third_party_settings:
                 label: hidden
                 settings:
                   view_mode: hero_background_w_caption
-                third_party_settings: { }
+                third_party_settings: {  }
             weight: -10
             additional:
               bootstrap_styles:
@@ -277,8 +278,8 @@ third_party_settings:
               formatter:
                 type: metatag_empty_formatter
                 label: hidden
-                settings: { }
-                third_party_settings: { }
+                settings: {  }
+                third_party_settings: {  }
             weight: -8
             additional:
               bootstrap_styles:
@@ -370,8 +371,24 @@ third_party_settings:
                     class: null
                   min_height:
                     class: 0
-        third_party_settings: { }
-      - layout_id: 'bootstrap_layout_builder:blb_col_1'
+          d5e6b87c-5272-4e4d-8712-b69ed019967c:
+            uuid: d5e6b87c-5272-4e4d-8712-b69ed019967c
+            region: blb_region_col_1
+            configuration:
+              id: 'field_block:node:story:field_osu_story_realtime_seo'
+              label_display: '0'
+              context_mapping:
+                entity: layout_builder.entity
+              formatter:
+                type: yoastseo_empty_formatter
+                label: above
+                settings: {  }
+                third_party_settings: {  }
+            weight: -7
+            additional: {  }
+        third_party_settings: {  }
+      -
+        layout_id: 'bootstrap_layout_builder:blb_col_1'
         layout_settings:
           label: 'Tags and Organizations'
           container_wrapper_classes: ''
@@ -482,7 +499,7 @@ third_party_settings:
               - col-md-12
               - col-12
           remove_gutters: '0'
-          context_mapping: { }
+          context_mapping: {  }
         components:
           ee1813a5-86a0-4ff3-96ce-764aa9b446bc:
             uuid: ee1813a5-86a0-4ff3-96ce-764aa9b446bc
@@ -500,7 +517,7 @@ third_party_settings:
                 label: hidden
                 settings:
                   link: true
-                third_party_settings: { }
+                third_party_settings: {  }
             weight: 0
             additional:
               bootstrap_styles:
@@ -606,7 +623,7 @@ third_party_settings:
                 label: hidden
                 settings:
                   link: true
-                third_party_settings: { }
+                third_party_settings: {  }
             weight: 1
             additional:
               bootstrap_styles:
@@ -696,8 +713,9 @@ third_party_settings:
                     class: null
                   min_height:
                     class: 0
-        third_party_settings: { }
-      - layout_id: 'bootstrap_layout_builder:blb_col_1'
+        third_party_settings: {  }
+      -
+        layout_id: 'bootstrap_layout_builder:blb_col_1'
         layout_settings:
           label: 'Related Content'
           container_wrapper_classes: ''
@@ -808,7 +826,7 @@ third_party_settings:
               - col-md-12
               - col-12
           remove_gutters: '0'
-          context_mapping: { }
+          context_mapping: {  }
         components:
           cb8992e4-41ba-427c-9b2f-7e8aea722122:
             uuid: cb8992e4-41ba-427c-9b2f-7e8aea722122
@@ -818,7 +836,7 @@ third_party_settings:
               label: ''
               label_display: visible
               provider: views
-              context_mapping: { }
+              context_mapping: {  }
               views_label: ''
               items_per_page: none
             weight: 0
@@ -910,19 +928,13 @@ third_party_settings:
                     class: null
                   min_height:
                     class: 0
-        third_party_settings: { }
+        third_party_settings: {  }
   layout_builder_restrictions:
-    allowed_block_categories: { }
+    allowed_block_categories: {  }
     entity_view_mode_restriction:
-      allowed_layouts:
-        - 'bootstrap_layout_builder:blb_col_1'
-        - 'bootstrap_layout_builder:blb_col_2'
-        - 'bootstrap_layout_builder:blb_col_3'
-        - 'bootstrap_layout_builder:blb_col_4'
-        - 'bootstrap_layout_builder:blb_col_5'
-        - 'bootstrap_layout_builder:blb_col_6'
-      denylisted_blocks: { }
-      allowlisted_blocks: { }
+      allowed_layouts: {  }
+      denylisted_blocks: {  }
+      allowlisted_blocks: {  }
       restricted_categories:
         - Help
         - Menus
@@ -934,13 +946,7 @@ third_party_settings:
         - 'Webform access'
         - core
     entity_view_mode_restriction_by_region:
-      allowed_layouts:
-        - 'bootstrap_layout_builder:blb_col_1'
-        - 'bootstrap_layout_builder:blb_col_2'
-        - 'bootstrap_layout_builder:blb_col_3'
-        - 'bootstrap_layout_builder:blb_col_4'
-        - 'bootstrap_layout_builder:blb_col_5'
-        - 'bootstrap_layout_builder:blb_col_6'
+      allowed_layouts: {  }
 id: node.story.default
 targetEntityType: node
 bundle: story
@@ -949,15 +955,15 @@ content:
   body:
     type: text_default
     label: hidden
-    settings: { }
-    third_party_settings: { }
+    settings: {  }
+    third_party_settings: {  }
     weight: 101
     region: content
   field_meta_tags:
     type: metatag_empty_formatter
     label: above
-    settings: { }
-    third_party_settings: { }
+    settings: {  }
+    third_party_settings: {  }
     weight: 105
     region: blb_region_col_1
   field_osu_story_cover_image:
@@ -966,7 +972,7 @@ content:
     settings:
       view_mode: default
       link: false
-    third_party_settings: { }
+    third_party_settings: {  }
     weight: 103
     region: blb_region_col_1
   field_osu_story_external_url:
@@ -978,24 +984,32 @@ content:
       url_plain: false
       rel: ''
       target: ''
-    third_party_settings: { }
+    third_party_settings: {  }
     weight: 104
+    region: blb_region_col_1
+  field_osu_story_realtime_seo:
+    type: yoastseo_empty_formatter
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 106
     region: blb_region_col_1
   field_tags:
     type: entity_reference_label
     label: above
     settings:
       link: true
-    third_party_settings: { }
+    third_party_settings: {  }
     weight: 102
     region: blb_region_col_1
   links:
-    settings: { }
-    third_party_settings: { }
+    settings: {  }
+    third_party_settings: {  }
     weight: 100
     region: content
 hidden:
-  field_osu_story_caption: true
+  entitygroupfield: true
   field_osu_organizations: true
+  field_osu_story_caption: true
   layout_builder__layout: true
   toc_js: true

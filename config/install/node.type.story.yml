@@ -35,7 +35,7 @@ third_party_settings:
 name: Story
 type: story
 description: "Use <em>Stories</em> for your news articles, press releases or stories. <br />\r\nHas tags used to relate stories and people together."
-help: ''
+help: null
 new_revision: true
 preview_mode: 1
 display_submitted: true
