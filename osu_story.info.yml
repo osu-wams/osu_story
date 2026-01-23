@@ -5,8 +5,8 @@ package: OSU
 version: 1.0.14
 core_version_requirement: ^10 || ^11
 dependencies:
-  - drupal:yoast_seo
   - drupal:views
   - date_ap_style:date_ap_style
   - osu_media:osu_media
+  - yoast_seo:yoast_seo
   - views_bootstrap:views_bootstrap
