@@ -67,6 +67,8 @@ function osu_story_update_9003(&$sandbox) {
     FieldConfig::loadByName('node', 'story', 'field_osu_story_realtime_seo')
       ->delete();
   }
+  $config_storage->delete('field.storage.node.field_osu_story_realtime_seo');
+  $config_storage->delete('field.field.node.story.field_osu_story_realtime_seo');
   FieldStorageConfig::create($source->read('field.storage.node.field_osu_story_realtime_seo'))
     ->save();
   FieldConfig::create($source->read('field.field.node.story.field_osu_story_realtime_seo'))
