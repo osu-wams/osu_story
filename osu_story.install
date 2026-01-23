@@ -50,6 +50,9 @@ function osu_story_update_9002(&$sandbox) {
  * Add realtime_seo (Yoast!) to stories; remove layout override capability.
  */
 function osu_story_update_9003(&$sandbox) {
+  /** @var \Drupal\Core\ProxyClass\Extension\ModuleInstaller $module_installer */
+  $module_installer = Drupal::service('module_installer');
+  $module_installer->install(['yoast_seo']);
   $logger = \Drupal::logger('osu_story');
   $install_path = Drupal::service('module_handler')
     ->getModule('osu_story')
@@ -84,7 +87,7 @@ function osu_story_update_9003(&$sandbox) {
     ->save();
   FieldConfig::create($source->read('field.field.node.story.field_osu_story_realtime_seo'))
     ->save();
-  $updated_form = $source->read('core.entity_form_display.node.story.default');;
+  $updated_form = $source->read('core.entity_form_display.node.story.default');
   $existing_form = $config_storage->read('core.entity_form_display.node.story.default');
   $existing_form['content']['field_osu_story_realtime_seo'] = $updated_form['content']['field_osu_story_realtime_seo'];
   unset($existing_form['hidden']['field_osu_story_realtime_seo']);
@@ -146,9 +149,6 @@ function osu_story_update_9004(&$sandbox): TranslatableMarkup {
  * Rerun update 9003.
  */
 function osu_story_update_9005(&$sandbox): TranslatableMarkup {
-  /** @var \Drupal\Core\ProxyClass\Extension\ModuleInstaller $module_installer */
-  $module_installer = Drupal::service('module_installer');
-  $module_installer->install(['yoast_seo']);
   osu_story_update_9003($sandbox);
   return t('Reran update 9003 for OSU Story.');
 }

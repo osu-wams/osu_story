@@ -50,9 +50,10 @@ function osu_story_node_presave(NodeInterface $node) {
       $source_redirects = $redirect_repository->findBySourcePath($source_path);
       $redirect_found = FALSE;
       // Find the redirect if it already exists.
+      $language = $node->get('langcode')->value;
+      $urlHash = Redirect::generateHash($source_path, [], $language);
       foreach ($source_redirects as $source_redirect) {
-        if ($source_redirect->getRedirectUrl()
-          ->toUriString() == $external_url) {
+        if ($source_redirect->getHash() == $urlHash) {
           $redirect_found = TRUE;
           break;
         }

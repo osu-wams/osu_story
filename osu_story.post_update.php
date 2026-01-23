@@ -10,7 +10,7 @@ use Drupal\node\Entity\Node;
 use Drupal\redirect\Entity\Redirect;
 
 /**
- * Updates meta tags for an external story node.
+ * Updates meta-tags for an external story node.
  *
  * @param \Drupal\node\Entity\Node $node
  *   The node object to update. Passed by reference, as all PHP objects are.
@@ -61,11 +61,15 @@ function _osu_story_ensure_story_redirect(Node $node, string $external_url): voi
   $redirect_repository = \Drupal::service('redirect.repository');
   $source_path = $node->toUrl()->getInternalPath();
   $source_redirects = $redirect_repository->findBySourcePath($source_path);
+  $language = $node->get('langcode')->value;
+  $urlHash = Redirect::generateHash($source_path, [], $language);
+  /** @var Drupal\redirect\Entity\Redirect $source_redirect */
   foreach ($source_redirects as $source_redirect) {
-    if ($source_redirect->getRedirectUrl()->toUriString() === $external_url) {
+    if ($source_redirect->getHash() == $urlHash) {
       return;
     }
   }
+
   $redirect_config = \Drupal::config('redirect.settings');
   $redirect = Redirect::create();
   $redirect->setSource($source_path);
