@@ -50,6 +50,7 @@ function osu_story_update_9002(&$sandbox) {
  * Add realtime_seo (Yoast!) to stories; remove layout override capability.
  */
 function osu_story_update_9003(&$sandbox) {
+  $logger = \Drupal::logger('osu_story');
   $install_path = Drupal::service('module_handler')
     ->getModule('osu_story')
     ->getPath();
@@ -59,13 +60,23 @@ function osu_story_update_9003(&$sandbox) {
   $optional_source = new FileStorage($optional_config_path);
   /** @var \Drupal\Core\Config\CachedStorage $config_storage */
   $config_storage = \Drupal::service('config.storage');
-  if (FieldStorageConfig::loadByName('node', 'field_osu_story_realtime_seo')) {
-    FieldStorageConfig::loadByName('node', 'field_osu_story_realtime_seo')
-      ->delete();
+  try {
+    if (FieldConfig::loadByName('node', 'story', 'field_osu_story_realtime_seo') !== NULL) {
+      FieldConfig::loadByName('node', 'story', 'field_osu_story_realtime_seo')
+        ->delete();
+    }
   }
-  if (FieldConfig::loadByName('node', 'story', 'field_osu_story_realtime_seo')) {
-    FieldConfig::loadByName('node', 'story', 'field_osu_story_realtime_seo')
-      ->delete();
+  catch (\Exception $e) {
+    $logger->notice('Failed to delete field_osu_story_realtime_seo field: @message', ['@message' => $e->getMessage()]);
+  }
+  try {
+    if (FieldStorageConfig::loadByName('node', 'field_osu_story_realtime_seo') !== NULL) {
+      FieldStorageConfig::loadByName('node', 'field_osu_story_realtime_seo')
+        ->delete();
+    }
+  }
+  catch (\Exception $e) {
+    $logger->notice('Failed to delete field_osu_story_realtime_seo field storage: @message', ['@message' => $e->getMessage()]);
   }
   $config_storage->delete('field.storage.node.field_osu_story_realtime_seo');
   $config_storage->delete('field.field.node.story.field_osu_story_realtime_seo');
@@ -135,6 +146,9 @@ function osu_story_update_9004(&$sandbox): TranslatableMarkup {
  * Rerun update 9003.
  */
 function osu_story_update_9005(&$sandbox): TranslatableMarkup {
+  /** @var \Drupal\Core\ProxyClass\Extension\ModuleInstaller $module_installer */
+  $module_installer = Drupal::service('module_installer');
+  $module_installer->install(['yoast_seo']);
   osu_story_update_9003($sandbox);
   return t('Reran update 9003 for OSU Story.');
 }
