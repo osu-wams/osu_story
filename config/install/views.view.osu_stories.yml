@@ -6,6 +6,7 @@ dependencies:
     - field.storage.node.field_osu_story_external_url
     - image.style.1400x900
     - image.style.400x375
+    - image.style.osu_stories_archive
     - node.type.story
     - taxonomy.vocabulary.tags
   module:
@@ -1100,7 +1101,7 @@ display:
           type: media_thumbnail
           settings:
             image_link: ''
-            image_style: 1400x900
+            image_style: osu_stories_archive
             image_loading:
               attribute: lazy
           group_column: target_id
