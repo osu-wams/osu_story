@@ -7,6 +7,8 @@
 
 use Drupal\Core\Config\FileStorage;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\field\Entity\FieldConfig;
+use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\image\Entity\ImageStyle;
 use Drupal\layout_builder\Plugin\SectionStorage\OverridesSectionStorage;
 
@@ -57,11 +59,23 @@ function osu_story_update_9003(&$sandbox) {
   $optional_source = new FileStorage($optional_config_path);
   /** @var \Drupal\Core\Config\CachedStorage $config_storage */
   $config_storage = \Drupal::service('config.storage');
-  $config_storage->write('core.entity_form_display.node.story.default', $source->read('core.entity_form_display.node.story.default'));
-  $config_storage->write('core.entity_view_display.node.story.teaser', $source->read('core.entity_view_display.node.story.teaser'));
-  $config_storage->write('field.field.node.story.body', $source->read('field.field.node.story.body'));
-  $config_storage->write('node.type.story', $source->read('node.type.story'));
-  $config_storage->write('field.field.node.story.field_osu_story_realtime_seo', $source->read('field.field.node.story.field_osu_story_realtime_seo'));
+  if (FieldStorageConfig::loadByName('node', 'field_osu_story_realtime_seo')) {
+    FieldStorageConfig::loadByName('node', 'field_osu_story_realtime_seo')
+      ->delete();
+  }
+  if (FieldConfig::loadByName('node', 'story', 'field_osu_story_realtime_seo')) {
+    FieldConfig::loadByName('node', 'story', 'field_osu_story_realtime_seo')
+      ->delete();
+  }
+  FieldStorageConfig::create($source->read('field.storage.node.field_osu_story_realtime_seo'))
+    ->save();
+  FieldConfig::create($source->read('field.field.node.story.field_osu_story_realtime_seo'))
+    ->save();
+  $updated_form = $source->read('core.entity_form_display.node.story.default');;
+  $existing_form = $config_storage->read('core.entity_form_display.node.story.default');
+  $existing_form['content']['field_osu_story_realtime_seo'] = $updated_form['content']['field_osu_story_realtime_seo'];
+  unset($existing_form['hidden']['field_osu_story_realtime_seo']);
+  $config_storage->write('core.entity_form_display.node.story.default', $existing_form);
   // Check to see if _any_ stories have layout overrides.
   $num_stories_with_overrides = \Drupal::entityTypeManager()
     ->getStorage('node')
@@ -98,7 +112,7 @@ function osu_story_update_9004(&$sandbox): TranslatableMarkup {
     ->getPath();
   $osu_media_config_path = $osu_media_module_path . '/config/install';
   $osu_media_config = new FileStorage($osu_media_config_path);
-  $existing_image_styles = ImageStyle::load('osu_story_archive');
+  $existing_image_styles = ImageStyle::load('osu_stories_archive');
   if (!$existing_image_styles) {
     ImageStyle::create($osu_media_config->read('image.style.osu_stories_archive'))
       ->save();
@@ -113,4 +127,12 @@ function osu_story_update_9004(&$sandbox): TranslatableMarkup {
   }
   $osu_story_view_config->save();
   return t('Created new Image style and updated the Views Archive page for OSU Story.');
+}
+
+/**
+ * Rerun update 9003.
+ */
+function osu_story_update_9005(&$sandbox): TranslatableMarkup {
+  osu_story_update_9003($sandbox);
+  return t('Reran update 9003 for OSU Story.');
 }
