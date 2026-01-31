@@ -5,7 +5,6 @@
  * OSU Story Module.
  */
 
-use Drupal\Component\Serialization\Json;
 use Drupal\node\NodeInterface;
 use Drupal\redirect\Entity\Redirect;
 
@@ -20,7 +19,7 @@ function osu_story_node_insert(NodeInterface $node) {
     && !$node->get('field_osu_story_external_url')->isEmpty()) {
     $url_item = $node->get('field_osu_story_external_url')->first();
     $external_url = $url_item ? $url_item->getUrl()->toString() : '';
-    _osu_story_ensure_story_redirect($node, $external_url);
+    _osu_story_update_story_redirects_set_xmlsitemap($node, $external_url);
   }
 }
 
@@ -34,11 +33,27 @@ function osu_story_node_update(NodeInterface $node) {
     && !$node->get('field_osu_story_external_url')->isEmpty()) {
     $url_item = $node->get('field_osu_story_external_url')->first();
     $external_url = $url_item ? $url_item->getUrl()->toString() : '';
-    _osu_story_ensure_story_redirect($node, $external_url);
+    _osu_story_update_story_redirects_set_xmlsitemap($node, $external_url);
   }
 }
 
-function _osu_story_ensure_story_redirect(NodeInterface $node, string $external_url): void {
+/**
+ * Updates the metatags, XML Sitemap settings, and redirects for external URLs.
+ *
+ * This method is used to mark a story node as external by:
+ * - Updating its meta tags with canonical URL, robots, and Open Graph URL
+ * values.
+ * - Excluding the story node from the XML Sitemap to prevent indexing.
+ * - Creating a redirect to an external URL, if one does not already exist.
+ *
+ * @param \Drupal\node\NodeInterface $node
+ *   The story node entity to update.
+ * @param string $external_url
+ *   The external URL to set in meta tags and redirects.
+ *
+ * @return void
+ */
+function _osu_story_update_story_redirects_set_xmlsitemap(NodeInterface $node, string $external_url): void {
   // Meta tag updates.
   if ($node->hasField('field_meta_tags')) {
     $meta_tag_field = $node->get('field_meta_tags')->value;
