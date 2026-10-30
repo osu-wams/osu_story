@@ -22,35 +22,35 @@ third_party_settings:
     enabled: false
     allow_custom: false
   layout_builder_restrictions:
-    allowed_block_categories: {  }
+    allowed_block_categories: {}
     entity_view_mode_restriction:
       allowed_layouts:
-        - 'bootstrap_layout_builder:blb_col_1'
-        - 'bootstrap_layout_builder:blb_col_2'
-        - 'bootstrap_layout_builder:blb_col_3'
-        - 'bootstrap_layout_builder:blb_col_4'
-        - 'bootstrap_layout_builder:blb_col_5'
-        - 'bootstrap_layout_builder:blb_col_6'
-      denylisted_blocks: {  }
-      allowlisted_blocks: {  }
+        - "bootstrap_layout_builder:blb_col_1"
+        - "bootstrap_layout_builder:blb_col_2"
+        - "bootstrap_layout_builder:blb_col_3"
+        - "bootstrap_layout_builder:blb_col_4"
+        - "bootstrap_layout_builder:blb_col_5"
+        - "bootstrap_layout_builder:blb_col_6"
+      denylisted_blocks: {}
+      allowlisted_blocks: {}
       restricted_categories:
         - Help
         - Menus
-        - 'Purge UI'
-        - 'Responsive Preview'
+        - "Purge UI"
+        - "Responsive Preview"
         - System
         - User
         - Webform
-        - 'Webform access'
+        - "Webform access"
         - core
     entity_view_mode_restriction_by_region:
       allowed_layouts:
-        - 'bootstrap_layout_builder:blb_col_1'
-        - 'bootstrap_layout_builder:blb_col_2'
-        - 'bootstrap_layout_builder:blb_col_3'
-        - 'bootstrap_layout_builder:blb_col_4'
-        - 'bootstrap_layout_builder:blb_col_5'
-        - 'bootstrap_layout_builder:blb_col_6'
+        - "bootstrap_layout_builder:blb_col_1"
+        - "bootstrap_layout_builder:blb_col_2"
+        - "bootstrap_layout_builder:blb_col_3"
+        - "bootstrap_layout_builder:blb_col_4"
+        - "bootstrap_layout_builder:blb_col_5"
+        - "bootstrap_layout_builder:blb_col_6"
 id: node.story.teaser
 targetEntityType: node
 bundle: story
@@ -61,12 +61,12 @@ content:
     label: hidden
     settings:
       trim_length: 600
-    third_party_settings: {  }
+    third_party_settings: {}
     weight: 0
     region: content
   links:
-    settings: {  }
-    third_party_settings: {  }
+    settings: {}
+    third_party_settings: {}
     weight: 1
     region: content
 hidden:

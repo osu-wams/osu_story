@@ -10,11 +10,11 @@ id: node.story.field_osu_story_realtime_seo
 field_name: field_osu_story_realtime_seo
 entity_type: node
 bundle: story
-label: 'Realtime SEO'
-description: ''
+label: "Realtime SEO"
+description: ""
 required: false
 translatable: false
-default_value: {  }
-default_value_callback: ''
-settings: {  }
+default_value: {}
+default_value_callback: ""
+settings: {}
 field_type: yoast_seo

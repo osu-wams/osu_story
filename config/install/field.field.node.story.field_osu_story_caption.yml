@@ -8,11 +8,11 @@ id: node.story.field_osu_story_caption
 field_name: field_osu_story_caption
 entity_type: node
 bundle: story
-label: 'Caption (Legacy)'
+label: "Caption (Legacy)"
 description: "<em>Caption</em> is a legacy field used when migrating from Drupal 7.<br>\r\nIt is not used by default in any View or Display."
 required: false
 translatable: false
-default_value: { }
-default_value_callback: ''
-settings: { }
+default_value: {}
+default_value_callback: ""
+settings: {}
 field_type: string

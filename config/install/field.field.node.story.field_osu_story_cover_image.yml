@@ -9,14 +9,14 @@ id: node.story.field_osu_story_cover_image
 field_name: field_osu_story_cover_image
 entity_type: node
 bundle: story
-label: 'Story Cover Image'
-description: ''
+label: "Story Cover Image"
+description: ""
 required: false
 translatable: false
-default_value: {  }
-default_value_callback: ''
+default_value: {}
+default_value_callback: ""
 settings:
-  handler: 'default:media'
+  handler: "default:media"
   handler_settings:
     target_bundles:
       image: image
@@ -24,5 +24,5 @@ settings:
       field: _none
       direction: ASC
     auto_create: true
-    auto_create_bundle: ''
+    auto_create_bundle: ""
 field_type: entity_reference
