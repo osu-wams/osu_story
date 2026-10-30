@@ -8,8 +8,11 @@ dependencies:
     - field.field.node.story.field_osu_story_caption
     - field.field.node.story.field_osu_story_cover_image
     - field.field.node.story.field_osu_story_external_url
-    - field.field.node.story.field_osu_story_realtime_seo
+    - field.field.node.story.field_seo_analysis
+    - field.field.node.story.field_seo_description
+    - field.field.node.story.field_seo_title
     - field.field.node.story.field_tags
+    - field.field.node.story.layout_builder__layout
     - node.type.story
     - views.view.osu_stories
   module:
@@ -370,21 +373,6 @@ third_party_settings:
                     class: null
                   min_height:
                     class: 0
-          d5e6b87c-5272-4e4d-8712-b69ed019967c:
-            uuid: d5e6b87c-5272-4e4d-8712-b69ed019967c
-            region: blb_region_col_1
-            configuration:
-              id: "field_block:node:story:field_osu_story_realtime_seo"
-              label_display: "0"
-              context_mapping:
-                entity: layout_builder.entity
-              formatter:
-                type: yoastseo_empty_formatter
-                label: above
-                settings: {}
-                third_party_settings: {}
-            weight: -7
-            additional: {}
         third_party_settings: {}
       - layout_id: "bootstrap_layout_builder:blb_col_1"
         layout_settings:
@@ -929,7 +917,13 @@ third_party_settings:
   layout_builder_restrictions:
     allowed_block_categories: {}
     entity_view_mode_restriction:
-      allowed_layouts: {}
+      allowed_layouts:
+        - "bootstrap_layout_builder:blb_col_1"
+        - "bootstrap_layout_builder:blb_col_2"
+        - "bootstrap_layout_builder:blb_col_3"
+        - "bootstrap_layout_builder:blb_col_4"
+        - "bootstrap_layout_builder:blb_col_5"
+        - "bootstrap_layout_builder:blb_col_6"
       denylisted_blocks: {}
       allowlisted_blocks: {}
       restricted_categories:
@@ -943,7 +937,13 @@ third_party_settings:
         - "Webform access"
         - core
     entity_view_mode_restriction_by_region:
-      allowed_layouts: {}
+      allowed_layouts:
+        - "bootstrap_layout_builder:blb_col_1"
+        - "bootstrap_layout_builder:blb_col_2"
+        - "bootstrap_layout_builder:blb_col_3"
+        - "bootstrap_layout_builder:blb_col_4"
+        - "bootstrap_layout_builder:blb_col_5"
+        - "bootstrap_layout_builder:blb_col_6"
 id: node.story.default
 targetEntityType: node
 bundle: story
@@ -984,12 +984,27 @@ content:
     third_party_settings: {}
     weight: 104
     region: blb_region_col_1
-  field_osu_story_realtime_seo:
+  field_seo_analysis:
     type: yoastseo_empty_formatter
     label: above
     settings: {}
     third_party_settings: {}
-    weight: 106
+    weight: 105
+    region: blb_region_col_1
+  field_seo_description:
+    type: basic_string
+    label: above
+    settings: {}
+    third_party_settings: {}
+    weight: 103
+    region: blb_region_col_1
+  field_seo_title:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {}
+    weight: 104
     region: blb_region_col_1
   field_tags:
     type: entity_reference_label
