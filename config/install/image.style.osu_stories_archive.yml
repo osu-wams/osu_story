@@ -4,7 +4,7 @@ dependencies:
   module:
     - focal_point
 name: osu_stories_archive
-label: 'Stories Archive'
+label: "Stories Archive"
 effects:
   5eade813-3019-4fc6-9027-b162cf103635:
     uuid: 5eade813-3019-4fc6-9027-b162cf103635
