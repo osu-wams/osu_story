@@ -984,28 +984,6 @@ content:
     third_party_settings: {}
     weight: 104
     region: blb_region_col_1
-  field_seo_analysis:
-    type: yoastseo_empty_formatter
-    label: above
-    settings: {}
-    third_party_settings: {}
-    weight: 105
-    region: blb_region_col_1
-  field_seo_description:
-    type: basic_string
-    label: above
-    settings: {}
-    third_party_settings: {}
-    weight: 103
-    region: blb_region_col_1
-  field_seo_title:
-    type: string
-    label: above
-    settings:
-      link_to_entity: false
-    third_party_settings: {}
-    weight: 104
-    region: blb_region_col_1
   field_tags:
     type: entity_reference_label
     label: above
@@ -1021,7 +999,11 @@ content:
     region: content
 hidden:
   entitygroupfield: true
+  field_osu_meta_image: true
   field_osu_organizations: true
   field_osu_story_caption: true
+  field_seo_analysis: true
+  field_seo_description: true
+  field_seo_title: true
   layout_builder__layout: true
   toc_js: true

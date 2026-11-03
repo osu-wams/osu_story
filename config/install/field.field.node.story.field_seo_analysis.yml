@@ -1,4 +1,3 @@
-uuid: 87d78b17-3ce2-4b75-aab6-3a043e372088
 langcode: en
 status: true
 dependencies:
@@ -11,11 +10,11 @@ id: node.story.field_seo_analysis
 field_name: field_seo_analysis
 entity_type: node
 bundle: story
-label: 'SEO analysis'
-description: 'Pick the main keyword this page is about.'
+label: "SEO analysis"
+description: "Pick the main keyword this page is about."
 required: false
 translatable: false
-default_value: {  }
-default_value_callback: ''
-settings: {  }
+default_value: {}
+default_value_callback: ""
+settings: {}
 field_type: yoast_seo
