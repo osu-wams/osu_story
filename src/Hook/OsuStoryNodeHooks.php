@@ -35,6 +35,7 @@ class OsuStoryNodeHooks {
     if ($node->bundle() === 'story'
       && $node->hasField('field_meta_tags')
       && !$node->get('field_osu_story_external_url')->isEmpty()) {
+      /** @var \Drupal\link\Plugin\Field\FieldType\LinkItem $url_item */
       $url_item = $node->get('field_osu_story_external_url')->first();
       $external_url = $url_item ? $url_item->getUrl()->toString() : '';
 
@@ -53,6 +54,7 @@ class OsuStoryNodeHooks {
     if ($node->bundle() === 'story'
       && $node->hasField('field_meta_tags')
       && !$node->get('field_osu_story_external_url')->isEmpty()) {
+      /** @var \Drupal\link\Plugin\Field\FieldType\LinkItem $url_item */
       $url_item = $node->get('field_osu_story_external_url')->first();
       $external_url = $url_item ? $url_item->getUrl()->toString() : '';
 
@@ -70,6 +72,7 @@ class OsuStoryNodeHooks {
   public function nodeUpdate(NodeInterface $node): void {
     if ($node->bundle() === 'story'
       && !$node->get('field_osu_story_external_url')->isEmpty()) {
+      /** @var \Drupal\link\Plugin\Field\FieldType\LinkItem $url_item */
       $url_item = $node->get('field_osu_story_external_url')->first();
       $external_url = $url_item ? $url_item->getUrl()->toString() : '';
 
