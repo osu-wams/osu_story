@@ -1,0 +1,6 @@
+services:
+  _defaults:
+    autowire: true
+
+  Drupal\osu_story\Hook\OsuStoryNodeHooks:
+    class: Drupal\osu_story\Hook\OsuStoryNodeHooks
